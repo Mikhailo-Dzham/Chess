@@ -1,5 +1,5 @@
 from classes.Figure import Figure
-from classes.Rook import Rook
+from classes.Figures import *
 
 
 class Board:
