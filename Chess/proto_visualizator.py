@@ -26,14 +26,21 @@ def draw_chessboard():
         canvas.create_text(5, i * CELL_SIZE + CELL_SIZE // 2, anchor="w", text=str(8 - i), font=("Arial", 10, "bold"))
         canvas.create_text(i * CELL_SIZE + CELL_SIZE // 2, BOARD_SIZE * CELL_SIZE - 5, anchor="s", text=chr(97 + i), font=("Arial", 10, "bold"))
 
-def draw_circle_in_cell(col, row, color="red"):
+
+def draw_circle_in_cell(col, row, color="red", label=""):
     x_center = col * CELL_SIZE + CELL_SIZE // 2
     y_center = row * CELL_SIZE + CELL_SIZE // 2
     x1 = x_center - CIRCLE_RADIUS
     y1 = y_center - CIRCLE_RADIUS
     x2 = x_center + CIRCLE_RADIUS
     y2 = y_center + CIRCLE_RADIUS
+
     canvas.create_oval(x1, y1, x2, y2, fill=color, outline="black")
+
+    if label:
+        canvas.create_text(x_center, y_center, text=label, fill="black" if color != "black" else "white",
+                           font=("Arial", 10, "bold"))
+
 
 class CircleDrawer:
     def clear(self):

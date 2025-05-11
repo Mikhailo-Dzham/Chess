@@ -21,8 +21,9 @@ def coordinate_translater(loc) -> list:
     return [x, y]
 
 ##########################################
-
+# Основні взаємодії з грою
 game = GameEngine()
+game.deploy(Knight, "white", (2, 3))
 game.deploy(Bishop, "black", (2, 2))
 game.move((2, 2), (7, 7))
 
@@ -35,7 +36,10 @@ def update_board_visuals():
     for i, line in enumerate(game.board.space):
         for j, cell in enumerate(line):
             if cell:
-                draw_circle_in_cell(j, i)
+                fig_color = "black" if cell.color == "black" else "white"
+                fig_name = type(cell).__name__[:3]
+                draw_circle_in_cell(j, i, color=fig_color, label=fig_name)
+
 
 update_board_visuals()
 
