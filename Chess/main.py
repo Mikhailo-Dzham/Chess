@@ -16,6 +16,7 @@ def coordinate_translater(loc) -> list:
         'g': 6,
         'h': 7
     }
+
     y = 8 - int(loc[0])
     x = letter_to_number[loc[1]]
     return [x, y]
