@@ -4,6 +4,7 @@ class Rook(Figure):
     def __init__(self, color):
         super().__init__(color)
         self.icon = f"{color[0]}R.png"
+        self.name = "rook"
 
     def get_possible_moves(self, pos, a, to_pos,  last_move=None) -> bool:
         m, r, c = [], pos[0], pos[1]
@@ -26,6 +27,7 @@ class Rook(Figure):
         
 class Bishop(Figure):
     def __init__(self, color):
+        self.name = "bishop"
         super().__init__(color)
         self.icon = f"{color[0]}B.png"
 
@@ -49,6 +51,7 @@ class King(Figure):
     def __init__(self, color):
         super().__init__(color)
         self.icon = f"{color[0]}K.png"
+        self.name = "king"
 
     def get_possible_moves(self, pos, a, to_pos, last_move=None) -> bool:
         m, r, c = [], pos[0], pos[1]
@@ -65,6 +68,7 @@ class Queen(Figure):
     def __init__(self, color):
         super().__init__(color)
         self.icon = f"{color[0]}Q.png"
+        self.name = "queen"
 
     def get_possible_moves(self, pos, a, to_pos, last_move=None) -> bool:
         m, r, c = [], pos[0], pos[1]
@@ -87,6 +91,7 @@ class Knight(Figure):
     def __init__(self, color):
         super().__init__(color)
         self.icon = f"{color[0]}N.png"
+        self.name = "knight"
 
     def get_possible_moves(self, pos, a, to_pos, last_move=None) -> bool:
         m, r, c = [], pos[0], pos[1]
@@ -102,6 +107,7 @@ class Pawn(Figure):
     def __init__(self, color):
         super().__init__(color)
         self.icon = f"{color[0]}p.png"
+        self.name = "pawn"
 
     def get_possible_moves(self, pos, a, to_pos, last_move=None) -> bool:
         m, r, c = [], pos[0], pos[1]
@@ -125,12 +131,12 @@ class Pawn(Figure):
                     m.append((nr, nc))
 
         # en passant
-        if last_move and isinstance(last_move["piece"], Pawn):
-            last_from_r, last_from_c = last_move["from"]
-            last_to_r, last_to_c = last_move["to"]
-            if abs(last_to_r - last_from_r) == 2:  # пішак зробив 2 кроки
-                if last_to_r == r and abs(last_to_c - c) == 1:
-                    m.append((r + direction, last_to_c))
+        # if last_move and isinstance(last_move["piece"], Pawn):
+        #     last_from_r, last_from_c = last_move["from"]
+        #     last_to_r, last_to_c = last_move["to"]
+        #     if abs(last_to_r - last_from_r) == 2:  # пішак зробив 2 кроки
+        #         if last_to_r == r and abs(last_to_c - c) == 1:
+        #             m.append((r + direction, last_to_c))
 
         return to_pos in m
 

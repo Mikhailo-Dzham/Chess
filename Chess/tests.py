@@ -73,6 +73,7 @@ class Observer:
                     print("Помилок немає")
                 except Exception as e:
                     print("Помилка при ході:", e)
+                # game.move(src, dst)
                 self.selected = []
                 draw_board()
         else:
