@@ -5,6 +5,10 @@ from classes.Figures import *
 from classes.GameEngine import GameEngine
 import os
 
+#######################
+
+#######################
+
 CELL_SIZE = 60  # ← відповідає розміру зображення
 BOARD_SIZE = 8
 
@@ -14,7 +18,7 @@ DARKCOLOR = "#769656"
 IMAGE_DIR = "classes/images"
 
 root = tk.Tk()
-root.title("Шахи")
+root.title("Chess")
 
 frame = tk.Frame(root)
 
@@ -56,19 +60,23 @@ class Observer:
         self.selected = []
 
     def on_cell_click(self, x, y):
-        print(f"Клік: ({x}, {y})")
-        self.selected.append((y, x))
 
-        if len(self.selected) == 2:
-            src, dst = self.selected
-            print(f"Спроба перемістити з {src} до {dst}")
-            try:
-                game.move(src, dst)
-                print("Хід успішний")
-            except Exception as e:
-                print("Помилка при ході:", e)
-            self.selected = []
-            draw_board()
+        if (game.board.space[y][x] and self.selected == []) or len(self.selected):
+            print(f"Клік: ({x}, {y})")
+            self.selected.append((y, x))
+
+            if len(self.selected) == 2:
+                src, dst = self.selected
+                print(f"Спроба перемістити з {src} до {dst}")
+                try:
+                    game.move(src, dst)
+                    print("Помилок немає")
+                except Exception as e:
+                    print("Помилка при ході:", e)
+                self.selected = []
+                draw_board()
+        else:
+            print("Клітинка пуста")
 
 
 observer = Observer()
