@@ -1,6 +1,5 @@
 from classes.Board import Board
 from classes.Figures import *
-
 from Chess.classes.Figures import *
 
 
@@ -9,6 +8,7 @@ class GameEngine:
         self.board = Board()
         self.turn = "white"  # білий починає
         self.last_move = None
+        self.status = "continue"
 
     def deploy(self, figure_class, color, location):
         self.board.space[location[0]][location[1]] = figure_class(color)
@@ -19,7 +19,7 @@ class GameEngine:
     def move(self, from_location, to_location):
         # print(self.board.space[from_location[0]][to_location[1]])
         piece = self.board.space[from_location[0]][from_location[1]]
-        if piece and from_location != to_location and piece.color == self.turn:
+        if piece and from_location != to_location and piece.color == self.turn and self.status == "continue":
             if piece.get_possible_moves(pos= from_location, a= self.board.space, to_pos= to_location):
 
                 print("Хід законний")
@@ -33,9 +33,11 @@ class GameEngine:
                 if self.is_check(color=self.turn):
                     print("Шах")
                     if self.is_checkmate(self.turn):
+                        self.status = "finish"
                         print("Мат")
                 else:
                     print("Все ок")
+
 
 
             else:

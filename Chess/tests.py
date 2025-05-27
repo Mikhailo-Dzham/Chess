@@ -14,6 +14,7 @@ BOARD_SIZE = 8
 
 LIGHTCOLOR = "#EEEED2"
 DARKCOLOR = "#769656"
+MIDDLECOLOR = "#769656"
 
 IMAGE_DIR = "classes/images"
 
@@ -36,8 +37,31 @@ def on_rotate():
     is_rotated = not is_rotated
     draw_board()
 
-tk.Button(controls, text="Reset", command=on_reset).pack(side=tk.LEFT, padx=5)
-tk.Button(controls, text="Rotate", command=on_rotate).pack(side=tk.LEFT, padx=5)
+frame.pack()
+controls.pack(side=tk.BOTTOM, pady=10)
+
+# Оновлюємо кнопки
+tk.Button(
+    controls,
+    text="Reset",
+    command=on_reset,
+    bg=MIDDLECOLOR,
+    fg=LIGHTCOLOR,
+    font=("Arial", 14),
+    width=12,
+    height=2
+).pack(side=tk.LEFT, padx=10)
+
+tk.Button(
+    controls,
+    text="Rotate",
+    command=on_rotate,
+    bg=MIDDLECOLOR,
+    fg=LIGHTCOLOR,
+    font=("Arial", 14),
+    width=12,
+    height=2
+).pack(side=tk.LEFT, padx=10)
 
 
 frame.pack()
@@ -70,6 +94,9 @@ class Observer:
                 print(f"Спроба перемістити з {src} до {dst}")
                 try:
                     game.move(src, dst)
+                    if game.status == "finish":
+                        turn = "black" if game.turn == "white" else "white"
+                        show_win_window(turn)
                     print("Помилок немає")
                 except Exception as e:
                     print("Помилка при ході:", e)
@@ -81,7 +108,6 @@ class Observer:
 
 
 observer = Observer()
-
 
 def load_image(icon_name):
     if icon_name in images_cache:
@@ -129,6 +155,31 @@ def draw_board():
             btn = buttons[row][col]
             btn.config(image=icon_img, bg=bg)
             btn.image = icon_img
+
+def show_win_window(player_color):
+    win_window = tk.Toplevel(root)
+    win_window.title("Game Over")
+    win_window.resizable(False, False)
+
+    # Основний фрейм у новому вікні
+    container = tk.Frame(win_window, padx=20, pady=20)
+    container.pack()
+
+    # Визначаємо текст та іконку
+    win_text = f"{player_color.capitalize()} is win"
+    icon_name = "wK.png" if player_color == "white" else "bK.png"
+
+    # Завантажуємо зображення
+    icon_img = load_image(icon_name)
+
+    # Розміщення елементів
+    label = tk.Label(container, text=win_text, font=("Arial", 28, "bold"), fg=DARKCOLOR)
+    label.grid(row=0, column=0, padx=10)
+
+    if icon_img:
+        icon_label = tk.Label(container, image=icon_img)
+        icon_label.image = icon_img  # Зберігаємо посилання
+        icon_label.grid(row=0, column=1)
 
 
 draw_board()
